@@ -7,6 +7,7 @@ var
     cookieParser = require('cookie-parser'),
     configs = require('./src/configurations'),
     path = require('path'),
+    helpers = require('./src/helpers'),
     app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -41,7 +42,7 @@ app.get('/', function(req, res) {
 * This route is used to initiate the ID/Key Authentication workflow.
 */
 app.get('/idkeyauth', function(req, res) {
-    var callbackTarget = configs.getIdKeyRedirectUri(req);
+    var callbackTarget = helpers.getIdKeyRedirectUri(req);
 	var getTokensUrl = appContext.createUrlForAuthentication(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, callbackTarget);
     res.redirect(getTokensUrl);
 });
@@ -67,7 +68,7 @@ app.get('/idkeycallback', function(req, res) {
 app.get('/oauth', function(req, res) {
     var authCodeParams = querystring.stringify({
         response_type: "code",
-        redirect_uri: getRedirectUri(req),
+        redirect_uri: helpers.getRedirectUri(req),
         client_id: configs.clientId,
         scope: configs.authCodeScope,
         state: configs.state
@@ -113,14 +114,6 @@ app.get('/oauthcallback', function(req, res) {
             }
         });
 });
-
-function getRedirectUri(req){
-    return req.protocol + "://" + req.headers.host + "/oauthcallback";
-}
-
-function getIdKeyRedirectUrl(req){
-    return req.protocol + "://" + req.headers.host + "/idkeycallback";
-}
 
 module.exports = app;
 app.listen(configs.configuredPort);

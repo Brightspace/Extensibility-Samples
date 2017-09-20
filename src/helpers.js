@@ -65,5 +65,13 @@ module.exports = {
     getUnixTimestamp: function() {
         var unix = Math.round(+new Date()/1000);
         return unix;
+    },
+
+    getRedirectUri: function(req) {
+        return req.protocol + "://" + req.headers.host + "/oauthcallback";
+    },
+
+    getIdKeyRedirectUri: function(req) {
+        return req.protocol + "://" + req.headers.host + "/idkeycallback";
     }
 }; 

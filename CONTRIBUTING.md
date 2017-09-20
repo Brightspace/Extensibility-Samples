@@ -1,4 +1,4 @@
-# Contributing to Extensibility Samples
+# Contributing to Brightspace Extensibility Samples
 
 ## Contributing
 

@@ -37,7 +37,7 @@ The sample solution provided allows you to toggle between both implementations a
 The following API samples are available in this solution:
 * [Upload a File to Content](/docs/content.md)
 * [Get All Final Grades in a Course](/docs/finalgrades.md)
-* [Who Am I]()
+* [Who Am I](/docs/whoami.md)
 
 ## Content Item Message (CIM) Samples
 The following Brightspace Remote Plugin examples that implement the LTI [Content-Item Message (CIM)](https://www.imsglobal.org/specs/lticiv1p0) standard are available:
