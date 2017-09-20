@@ -1,0 +1,56 @@
+<html>
+    <head>
+        <script
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+            crossorigin="anonymous"></script>
+    </head>
+    <body>
+        <h3>Select an import package:</h3>
+        <input type="radio" name="package" value="d2l-package1.zip">Import Package 1<br />
+        <input type="radio" name="package" value="d2l-package2.zip">Import Package 2<br />
+        <div hidden>
+            <form id="importForm" method="POST">
+                <input type="hidden" name="lti_message_type" />
+                <input type="hidden" name="lti_version" />
+                <input type="hidden" name="content_items" /> 
+                <input type="hidden" name="oauth_version" />
+                <input type="hidden" name="oauth_nonce" />
+                <input type="hidden" name="oauth_timestamp" />
+                <input type="hidden" name="oauth_consumer_key" />
+                <input type="hidden" name="oauth_callback" />
+                <input type="hidden" name="oauth_signature_method" />
+                <input type="hidden" name="oauth_signature" />
+            </form>
+        </div>
+        <br />
+        <button id="submitFormButton">Submit</button>
+    </body>
+    <script>
+        $( document ).ready(function() {
+            $('#submitFormButton').click( function() {
+                 $.ajax({
+                    url: "/getcourseimportdetails",
+                    data: {
+                        package: $("input[name='package']:checked").val()
+                    },
+                    success: function(response){
+                        $("input[name='lti_message_type']").val(response.lti_message_type);
+                        $("input[name='lti_version']").val(response.lti_version);
+                        $("input[name='content_items']").val(response.content_items);
+                        $("input[name='oauth_version']").val(response.oauth_version);
+                        $("input[name='oauth_nonce']").val(response.oauth_nonce);
+                        $("input[name='oauth_timestamp']").val(response.oauth_timestamp);
+                        $("input[name='oauth_consumer_key']").val(response.oauth_consumer_key);
+                        $("input[name='oauth_callback']").val(response.oauth_callback);
+                        $("input[name='oauth_signature_method']").val(response.oauth_signature_method);
+                        $("input[name='oauth_signature']").val(response.oauth_signature);
+                        $("#importForm").prop('action', response.lti_return_url);
+                        $("#importForm").submit();
+                    }
+                });
+            });
+           
+    });
+    </script>
+</html>
