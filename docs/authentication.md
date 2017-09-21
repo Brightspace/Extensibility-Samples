@@ -6,7 +6,7 @@ This project implements the ability to toggle between both authentication method
 See [Configurations](/docs/configurations.md) for details on how to set the various configurations that are used in the authentication process.
 
 ## ID/Key Authentication
-The code for the ID/Key Authentication can be found in the [server.js](../server.js) file. The following outlines the implemented functionality:
+The code for the ID/Key Authentication can be found in the [idkeyauth.js](../src/authorization.js) file. The following outlines the implemented functionality:
 * There are several different open source SDKs built by D2L that implement the ID/Key Authentication protocal. This solution is using the [JavaScript SDK](https://github.com/Brightspace/valence-sdk-javascript) and is imported in the project in the server.js file with the following code:
     ```javascript
     d2l = require('valence')
@@ -31,7 +31,7 @@ The code for the ID/Key Authentication can be found in the [server.js](../server
     ```
 
 ## OAuth 2.0
-The code for the ID/Key Authentication can be found in the [server.js](../server.js) file. Out of the box there are many supported OAuth 2.0 libraries that you can use in order to make your authenticated requests and support you through the authentication workflow. One thing to keep in mind is that OAuth 2.0 requires the calling application to be granted ```scopes``` that represent what routes the OAuth client can execute. 
+The code for the OAuth 2.0 implementation can be found in the [oauth.js](../src/authorization/oauth.js) file. Out of the box there are many supported OAuth 2.0 libraries that you can use in order to make your authenticated requests and support you through the authentication workflow. One thing to keep in mind is that OAuth 2.0 requires the calling application to be granted ```scopes``` that represent what routes the OAuth client can execute. 
 
 Currently for the samples the following scopes:
 * ```core:*:*```

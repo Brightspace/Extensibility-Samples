@@ -1,6 +1,6 @@
 module.exports = function (app, request, configs, appContext) {
 
-    var helpers = require('./helpers');
+    var helpers = require('../helpers');
 
     /* GET /whoami
     *  Returns the who am I information based on the currently authenticated user.

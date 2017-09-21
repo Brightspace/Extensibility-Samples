@@ -1,6 +1,6 @@
 module.exports = function (app, request, configs, appContext) {
 
-    var helpers = require('./helpers');
+    var helpers = require('../helpers');
     var async = require('async');
 
     /* GET /finalgrades

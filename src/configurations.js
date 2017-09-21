@@ -1,6 +1,9 @@
 /****
-    It is not recommended to commit your application key or client secret to the repository. In this case
+    It is not recommended to commit your application key or client secret to ANY repository. In this case
     these keys were generated against the devcop Brightspace instance which can be used for developer testing.
+    
+    It is also recommended that the state not be a hardcoded value but instead be a value that is re-computed during each OAuth 2.0 authorization
+    request. Please read the configurations documentation for additional information.
  ****/
 module.exports = {
     applicationId: process.env.APPLICATION_ID || 'JABIh2YY5cek4hvKy5jXVQ',

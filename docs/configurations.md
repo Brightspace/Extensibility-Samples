@@ -30,7 +30,7 @@ Several different configurations can be set an environment level or directly in 
 * ```ltiSecret``` (string)
     * The LTI secret that will be used to validate LTI requests coming from the Brightspace instance. This is the secret that will need to be used when setting up the Remote Plugin examples.
 * ```state``` (string)
-    * The state is a value sent with the initial [OAuth 2.0](authentication.md) request to the Authentication Endpoint. When the OAuth 2.0 callback is called, the state will be passed in and can be verified with this configured value to ensure the callback was initiated from the proper location. A good value would just be a randomly generated GUID.
+    * The state is a value sent with the initial [OAuth 2.0](authentication.md) request to the Authentication Endpoint. When the OAuth 2.0 callback is called, the state will be passed in and can be verified with this configured value to ensure the callback was initiated from the proper location. **This value was hardcoded for the sample but normally should change with each OAuth workflow and stored securely. The state helps protect against [CSRF](https://tools.ietf.org/html/rfc6749#section-10.12) and should be a non-guessable value as described [here](https://tools.ietf.org/html/rfc6749#section-10.10).**
 * ```tokenEndpoint``` (string/URL)
     * This is the token endpoint/URL that is used in the [OAuth 2.0 Authentication](authentication.md) workflow when exchanging an Authentication Token for an access token. The value for this route was obtained from [here](http://docs.valence.desire2learn.com/basic/oauth2.html#setting-up-oauth-2-0-authentication).
 

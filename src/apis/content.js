@@ -1,7 +1,7 @@
 module.exports = function (app, request, configs, appContext) {
 
     var fs = require('fs');
-    var helpers = require('./helpers');
+    var helpers = require('../helpers');
 
     /* GET /uploadhtmlcontent
     *  Uploads an HTML document to a module within the given course. The OrgUnitId and ModuleId are parameters

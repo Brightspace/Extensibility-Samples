@@ -26,6 +26,8 @@ Out of the box this solution was built to work with the Devcop Brightspace insta
 ## Configurations
 There are several different configurations that can be used to change how some of the APIs work and what the APIs execute against. For a detailed description of what the configurations are and how you can change them please see [Configurations](/docs/configurations.md).
 
+**It is not recommended to commit your application key or client secret to ANY repository. In the configurations file the keys were generated against the devcop Brightspace instance which can be used for developer testing.**
+
 ## Authentication
 When using the Brightspace APIs there are two available authentication methods:
 * [OAuth 2.0](http://docs.valence.desire2learn.com/basic/oauth2.html)
