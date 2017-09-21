@@ -16,3 +16,4 @@ The route provided is ```/uploadprofileimage```
 * The route can be accessed using OAuth 2.0 Authentication or the ID/Key authentication.
 * To view the profile image change navigate to the course classlist where the demo user is enrolled or the updated user's profile page.
 * You'll notice that this request still has a boundary similiar to the multipart/mixed request but the Content-Type is actually multipart/form-data which out of the box Superagent will handle for us.
+* The image being upload can be found in the [/profile](../content/profile) folder.
