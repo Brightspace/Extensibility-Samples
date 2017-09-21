@@ -93,7 +93,7 @@ app.get('/oauthcallback', function(req, res) {
     }
     var payload = querystring.stringify({ 
         grant_type: "authorization_code", 
-        redirect_uri: getRedirectUri(req), 
+        redirect_uri: helpers.getRedirectUri(req), 
         code: authorizationCode
     });
 

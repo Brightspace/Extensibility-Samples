@@ -37,7 +37,7 @@ module.exports = function (app, request, configs, appContext, path, directory) {
     app.get('/getcourseimportdetails', function (req, res) {
         // Generate the url to the package based on the user's selection, sent through the query param named
         // package.
-        var fileUrl = req.protocol + '://' + req.get('host') + '/content/importpackage/' + req.query.package;
+        var fileUrl = 'https://github.com/Brightspace/Extensibility-Samples/raw/master/content/importpackage/' + req.query.package;
         var contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
         var contentItems = {

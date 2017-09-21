@@ -19,7 +19,7 @@ module.exports = function (app, request, configs, appContext) {
             ShortTitle: null,
             Type: 1,
             TopicType: 1,
-            Url: "/content/enforced/6631-AS200/sample-content.html",
+            Url: "/content/enforced/6952-ES100/sample-content.html",
             StartDate: null,
             EndDate: null,
             DueDate: null,
@@ -31,7 +31,7 @@ module.exports = function (app, request, configs, appContext) {
             MajorUpdateText: null,
             ResetCompletionTracking: null
         };
-        var body = buildMultipartBody(boundary, topicData, './content/sample-content.html', 'sample-content.html', 'text/html', 'utf8');  
+        var body = buildMultipartBody(boundary, topicData, './content/file-upload/sample-content.html', 'sample-content.html', 'text/html', 'utf8');  
 
         if (accessToken) {
             console.log('Attempting to make the Content Creation route call using OAuth 2.0 authentication.');
@@ -91,7 +91,7 @@ module.exports = function (app, request, configs, appContext) {
             ShortTitle: null,
             Type: 1,
             TopicType: 1,
-            Url: "/content/enforced/6631-AS200/sample-content.docx",
+            Url: "/content/enforced/6952-ES100/sample-content.docx",
             StartDate: null,
             EndDate: null,
             DueDate: null,
@@ -104,7 +104,7 @@ module.exports = function (app, request, configs, appContext) {
             ResetCompletionTracking: null
         };
 
-        var body = buildMultipartBody(boundary, topicData, './content/sample-content.docx', 'sample-content.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        var body = buildMultipartBody(boundary, topicData, './content/file-upload/sample-content.docx', 'sample-content.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
 
         if (accessToken) {
             console.log('Attempting to make the Content Creation route call using OAuth 2.0 authentication.')
@@ -176,8 +176,6 @@ module.exports = function (app, request, configs, appContext) {
         }
         content += text + newLine;
         content += endBoundary;
-
-        console.log(content);
         return content;
     }
 };
