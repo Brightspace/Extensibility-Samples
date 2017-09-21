@@ -10,6 +10,10 @@ module.exports = function (app, request, configs) {
     *   their behalf.
     */
     app.get('/oauth', function(req, res) {
+
+        // The state value is hardcoded for the sample but normally should change with each request to the
+        // authentication endpoint and then stored securely. Please read the configuration.md readme for
+        // more information.
         var authCodeParams = querystring.stringify({
             response_type: "code",
             redirect_uri: helpers.getRedirectUri(req),
