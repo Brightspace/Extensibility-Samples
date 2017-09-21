@@ -1,5 +1,5 @@
 # Upload Content - multipart/mixed
-The code for this example application can be found in the [content.js](../src/content.js) file. There are two examples that show the uploading of a simple HTML document and a Word document with the .docx extension. These files can be found in the [/content/fileupload](../content/file-upload) folder.
+The code for this example application can be found in the [content.js](../src/apis/content.js) file. There are two examples that show the uploading of a simple HTML document and a Word document with the .docx extension. These files can be found in the [/content/fileupload](../content/file-upload) folder.
 
 ## API Route Overview
 ```

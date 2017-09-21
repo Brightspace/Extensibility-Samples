@@ -38,6 +38,8 @@ Several different configurations can be set an environment level or directly in 
 The [index.html]() page has several hardcoded values that indicate to the underlying sample API calls where to execute those calls. These hardcoded values can be found as query parameters on several of the links. The following links are available to be configured:
 * ```https://localhost:3434/finalgrades?orgUnitId=6631```
     * ```orgUnitId``` can be configured to any course where you would like to pull Final Grade Information From.
+* ```https://localhost:3434/uploadprofileimage?userId=172```
+    * ```userId``` can be configured to be any user who's profile you would like to update.
 * ```https://localhost:3434/uploadhtmlcontent?orgUnitId=6631&moduleId=1940```
     * ```orgUnitId``` can be updated to the course where you would like to upload content to.
     * ```moduleId``` can be updated to the module in content where you would like the new file to be added.

@@ -22,6 +22,7 @@ require('./src/authorization/oauth.js')(app, request, configs);
 require('./src/apis/whoami')(app, request, configs, appContext);
 require('./src/apis/content')(app, request, configs, appContext);
 require('./src/apis/grades')(app, request, configs, appContext);
+require('./src/apis/profileimage')(app, request, configs, appContext, __dirname);
 
 // Import Sample Remote Plugins
 require('./src/remote-plugins/isf-cim')(app, request, configs, appContext, path, __dirname);
