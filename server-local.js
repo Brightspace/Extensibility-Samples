@@ -2,7 +2,6 @@ var https = require('https');
 var selfSigned = require('openssl-self-signed-certificate');
 
 var app = require('./server');
-app.enable('trust proxy');
 
 var httpsPort = process.env.HTTPS_PORT || 3434;
 var options = {
