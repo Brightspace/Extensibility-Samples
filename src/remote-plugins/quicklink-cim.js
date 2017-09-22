@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (app, request, configs, appContext, path, directory, helpers) {
 
     /* GET /quicklinkselection
@@ -37,10 +39,10 @@ module.exports = function (app, request, configs, appContext, path, directory, h
         const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
         const contentItems = {
-            "@context" : "http://purl.imsglobal.org/ctx/lti/v1/ContentItem",
-            "@graph": [
+            '@context' : 'http://purl.imsglobal.org/ctx/lti/v1/ContentItem',
+            '@graph': [
                 {
-                    "@type" : "FileItem",
+                    '@type' : 'FileItem',
                     mediaType: 'text/html',
                     title: req.query.link,
                     text: 'A sample Brightspace Quicklink file.',

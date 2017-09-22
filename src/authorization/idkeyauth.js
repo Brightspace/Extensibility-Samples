@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (app, configs, appContext, helpers) {
 
     /* GET /idkeyauth
@@ -21,4 +23,4 @@ module.exports = function (app, configs, appContext, helpers) {
         res.redirect('/?authenticationType=idkeyauth');
     });
 
-}
+};

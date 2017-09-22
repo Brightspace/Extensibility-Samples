@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (app, request, configs, appContext, path, directory, helpers) {
 
     /* GET /courseimportselection
@@ -39,10 +41,10 @@ module.exports = function (app, request, configs, appContext, path, directory, h
         const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
         const contentItems = {
-            "@context" : "http://purl.imsglobal.org/ctx/lti/v1/ContentItem",
-            "@graph": [
+            '@context' : 'http://purl.imsglobal.org/ctx/lti/v1/ContentItem',
+            '@graph': [
                 {
-                    "@type" : "FileItem",
+                    '@type' : 'FileItem',
                     mediaType: 'application/vnd.d2l.coursepackage1p0',
                     title: req.query.package,
                     text: 'Brightspace sample course package to import.',

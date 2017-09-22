@@ -1,3 +1,5 @@
+'use strict';
+
 const 
     d2l = require('valence'),
     express = require('express'),

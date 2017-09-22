@@ -1,3 +1,5 @@
+'use strict';
+
 const querystring = require('querystring');
 
 module.exports = function (app, request, configs, helpers) {
@@ -14,7 +16,7 @@ module.exports = function (app, request, configs, helpers) {
         // authentication endpoint and then stored securely. Please read the configuration.md readme for
         // more information.
         const authCodeParams = querystring.stringify({
-            response_type: "code",
+            response_type: 'code',
             redirect_uri: helpers.getRedirectUri(req),
             client_id: configs.clientId,
             scope: configs.authCodeScope,
@@ -34,12 +36,12 @@ module.exports = function (app, request, configs, helpers) {
         const authorizationCode = req.query.code;
         const state = req.query.state;
         if (state !== configs.state) {
-            console.log("The state value from the authorization request was incorrect.");
-            res.status(500).send({ error: "STATE mistmatch - authorization request could not be completed." });
+            console.log('The state value from the authorization request was incorrect.');
+            res.status(500).send({ error: 'STATE mistmatch - authorization request could not be completed.'});
             return;
         }
         const payload = querystring.stringify({ 
-            grant_type: "authorization_code", 
+            grant_type: 'authorization_code', 
             redirect_uri: helpers.getRedirectUri(req), 
             code: authorizationCode
         });
@@ -52,7 +54,7 @@ module.exports = function (app, request, configs, helpers) {
                 if (err) {
                     console.log('Access Token Error', err.response || err);
                     res.redirect('/auth');
-                } else if(response.statusCode != 200) {
+                } else if(response.statusCode !== 200) {
                     res.status(response.statusCode).send(response.error);
                 } else {
                     const accessToken = response.body.access_token;

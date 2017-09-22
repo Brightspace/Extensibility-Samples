@@ -1,3 +1,5 @@
+'use strict';
+
 const crypto = require('crypto');
 
 module.exports = {
@@ -7,7 +9,7 @@ module.exports = {
     * Used when creating URL's for API requests that use the OAuth 2.0 authentication method.
     */
     createUrl: function(apiRoute, configs){
-        return configs.instanceScheme + '//' + configs.instanceUrl + ":" + configs.instancePort + apiRoute;
+        return configs.instanceScheme + '//' + configs.instanceUrl + ':' + configs.instancePort + apiRoute;
     },
 
     /* function generateAuthSignature
@@ -68,10 +70,10 @@ module.exports = {
     },
 
     getRedirectUri: function(req) {
-        return req.protocol + "://" + req.headers.host + "/oauthcallback";
+        return req.protocol + '://' + req.headers.host + '/oauthcallback';
     },
 
     getIdKeyRedirectUri: function(req) {
-        return req.protocol + "://" + req.headers.host + "/idkeycallback";
+        return req.protocol + '://' + req.headers.host + '/idkeycallback';
     }
 }; 

@@ -4,9 +4,10 @@
   "description": "Sample application showing how to extend Brightspace using APIs, Remote Plugins and other integration points..",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "jshint src server-local.js server.js",
+    "local": "node server-local.js",
     "start": "node server.js",
-    "local": "node server-local.js"
+    "test": "echo \"Error: no test specified\" && exit 1"  
   },
   "author": "Desire2Learn Inc.",
   "license": "Apache License 2.0",
@@ -20,6 +21,7 @@
     "valence": "^1.0.3"
   },
   "devDependencies": {
+    "jshint": "^2.9.5",
     "openssl-self-signed-certificate": "^1.1.6"
   }
 }

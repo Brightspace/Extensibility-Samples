@@ -1,6 +1,6 @@
+'use strict';
+
 module.exports = function (app, request, configs, appContext, path, directory, helpers) {
-
-
 
      /* GET /isfselection
     *  Returns the isf-cim html page for presentation to the user within Brightspace.
@@ -39,10 +39,10 @@ module.exports = function (app, request, configs, appContext, path, directory, h
         const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
         const contentItems = {
-            "@context" : "http://purl.imsglobal.org/ctx/lti/v1/ContentItem",
-            "@graph": [
+            '@context' : 'http://purl.imsglobal.org/ctx/lti/v1/ContentItem',
+            '@graph': [
                 {
-                    "@type" : "ContentItem",
+                    '@type' : 'ContentItem',
                     mediaType: 'image/png',
                     title: 'Brightspace Logo',
                     text: '',

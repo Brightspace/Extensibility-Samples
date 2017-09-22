@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs');
 
 module.exports = function (app, request, configs, appContext, helpers) {
@@ -14,11 +16,11 @@ module.exports = function (app, request, configs, appContext, helpers) {
         const accessToken = req.cookies[configs.cookieName].accessToken;
         const boundary = 'xxBOUNDARYxx';
         const topicData = {
-            Title: "Sample HTML Content",
+            Title: 'Sample HTML Content',
             ShortTitle: null,
             Type: 1,
             TopicType: 1,
-            Url: "/content/enforced/6952-ES100/sample-content.html",
+            Url: '/content/enforced/6952-ES100/sample-content.html',
             StartDate: null,
             EndDate: null,
             DueDate: null,
@@ -42,9 +44,9 @@ module.exports = function (app, request, configs, appContext, helpers) {
                 .send(body)
                 .end(function(error, response) {
                     if (error) {
-                        console.log("Error calling the upload content route", error);
+                        console.log('Error calling the upload content route', error);
                         res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                        res.status(response.statusCode).send(response.error);
                     } else {
                        res.status(200).send(response.text);
@@ -62,9 +64,9 @@ module.exports = function (app, request, configs, appContext, helpers) {
                 .send(body)
                 .end(function(error, response) {
                     if (error) {
-                        console.log("Error calling the upload content route", error);
+                        console.log('Error calling the upload content route', error);
                         res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                         res.status(response.statusCode).send(response.error);
                     } else {
                         res.status(200).send(response.text);
@@ -86,11 +88,11 @@ module.exports = function (app, request, configs, appContext, helpers) {
         const accessToken = req.cookies[configs.cookieName].accessToken;
         const boundary = 'xxBOUNDARYxx';
         const topicData = {
-            Title: "Sample Word Document Content",
+            Title: 'Sample Word Document Content',
             ShortTitle: null,
             Type: 1,
             TopicType: 1,
-            Url: "/content/enforced/6952-ES100/sample-content.docx",
+            Url: '/content/enforced/6952-ES100/sample-content.docx',
             StartDate: null,
             EndDate: null,
             DueDate: null,
@@ -106,7 +108,7 @@ module.exports = function (app, request, configs, appContext, helpers) {
         const body = buildMultipartBody(boundary, topicData, './content/file-upload/sample-content.docx', 'sample-content.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
 
         if (accessToken) {
-            console.log('Attempting to make the Content Creation route call using OAuth 2.0 authentication.')
+            console.log('Attempting to make the Content Creation route call using OAuth 2.0 authentication.');
             const contentRoute = helpers.createUrl(apiPath, configs);
             request
                 .post(contentRoute)
@@ -116,9 +118,9 @@ module.exports = function (app, request, configs, appContext, helpers) {
                 .send(body)
                 .end(function(error, response) {
                     if (error) {
-                        console.log("Error calling the upload content route", error);
+                        console.log('Error calling the upload content route', error);
                         res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                        res.status(response.statusCode).send(response.error);
                     } else {
                        res.status(200).send(response.text);
@@ -126,7 +128,7 @@ module.exports = function (app, request, configs, appContext, helpers) {
                 });
         } 
         else {
-            console.log('Attempting to make the Content Creation route call using ID Key Authentication.')
+            console.log('Attempting to make the Content Creation route call using ID Key Authentication.');
             const userId = req.cookies[configs.cookieName].userId;
             const userKey = req.cookies[configs.cookieName].userKey;
             const userContext = appContext.createUserContextWithValues(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, userId, userKey);
@@ -138,9 +140,9 @@ module.exports = function (app, request, configs, appContext, helpers) {
                 .send(body)
                 .end(function(error, response) {
                     if (error) {
-                        console.log("Error calling the upload content route", error);
+                        console.log('Error calling the upload content route', error);
                         res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                         res.status(response.statusCode).send(response.error);
                     } else {
                         res.status(200).send(response.text);

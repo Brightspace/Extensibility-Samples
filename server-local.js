@@ -1,3 +1,5 @@
+'use strict';
+
 const https = require('https'),
       selfSigned = require('openssl-self-signed-certificate'),
       app = require('./server');

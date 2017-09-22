@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (app, request, configs, appContext, rootDirectory, helpers) {
 
     /* GET /uploadprofileimage
@@ -17,9 +19,9 @@ module.exports = function (app, request, configs, appContext, rootDirectory, hel
                 .set('Authorization', `Bearer ${accessToken}`)
                 .end(function(error, response) {
                      if (error) {
-                        console.log("Error calling the who am I route", error);
+                        console.log('Error calling the who am I route', error);
                         res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                         res.status(response.statusCode).send(response.error);
                     } else {
                         res.status(200).send({success: true});
@@ -36,9 +38,9 @@ module.exports = function (app, request, configs, appContext, rootDirectory, hel
                 .attach('profileImage', rootDirectory + '/content/profile/profileImage.png')
                 .end(function(error, response) {
                     if (error) {
-                        console.log("Error calling the who am I route", error);
+                        console.log('Error calling the who am I route', error);
                         res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                         res.status(response.statusCode).send(response.error);
                     } else {
                         res.status(200).send({success: true});

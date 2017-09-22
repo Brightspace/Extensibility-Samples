@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function (app, request, configs, appContext, helpers) {
 
     /* GET /whoami
@@ -14,9 +16,9 @@ module.exports = function (app, request, configs, appContext, helpers) {
                 .set('Authorization', `Bearer ${accessToken}`)
                 .end(function(error, response) {
                      if (error) {
-                        console.log("Error calling the who am I route", error);
+                        console.log('Error calling the who am I route', error);
                         res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                         res.status(response.statusCode).send(response.error);
                     } else {
                         res.status(200).send(response.text);
@@ -32,9 +34,9 @@ module.exports = function (app, request, configs, appContext, helpers) {
                 .get( apiCallUrl )
                 .end(function(error, response) {
                     if (error) {
-                        console.log("Error calling the who am I route", error);
+                        console.log('Error calling the who am I route', error);
                         res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                         res.status(response.statusCode).send(response.error);
                     } else {
                         res.status(200).send(response.text);

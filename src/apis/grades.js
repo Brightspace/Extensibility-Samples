@@ -1,3 +1,5 @@
+'use strict';
+
 const async = require('async');
 
 module.exports = function (app, request, configs, appContext, helpers) {
@@ -22,9 +24,9 @@ module.exports = function (app, request, configs, appContext, helpers) {
                 .set('Authorization', `Bearer ${accessToken}`)
                 .end(function(error, response) {
                     if (error) {
-                        console.log("Error calling the who am I route", error);
+                        console.log('Error calling the who am I route', error);
                         return res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                         return res.status(response.statusCode).send(response.error);
                     } else {
                         const users = JSON.parse(response.text);
@@ -41,9 +43,9 @@ module.exports = function (app, request, configs, appContext, helpers) {
                 .get( apiCallUrl )
                 .end(function(error, response) {
                     if (error) {
-                        console.log("Error calling the who am I route", error);
+                        console.log('Error calling the who am I route', error);
                         res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                         res.status(response.statusCode).send(response.error);
                     } else {
                         const users = JSON.parse(response.text);
@@ -68,10 +70,10 @@ module.exports = function (app, request, configs, appContext, helpers) {
                         .set('Authorization', `Bearer ${accessToken}`)
                         .end(function(error, response) {
                             if (error) {
-                                console.log("Error calling the Final Grades route", error);
+                                console.log('Error calling the Final Grades route', error);
                                 callback({message: 'Error calling the Final Grades Route'});
-                            } else if(response.statusCode != 200) {
-                                if(response.statusCode == 404){
+                            } else if(response.statusCode !== 200) {
+                                if(response.statusCode === 404){
                                     finalGradeBlocks.push({ FinalGrade: {}, User: user });
                                     callback(null);
                                 } else {
@@ -89,10 +91,10 @@ module.exports = function (app, request, configs, appContext, helpers) {
                         .get( gradesRoute )
                         .end(function(error, response) {
                             if (error) {
-                                console.log("Error calling the Final Grades route", error);
+                                console.log('Error calling the Final Grades route', error);
                                 callback({message: 'Error calling the Final Grades Route'});
-                            } else if(response.statusCode != 200) {
-                                if(response.statusCode == 404){
+                            } else if(response.statusCode !== 200) {
+                                if(response.statusCode === 404){
                                     finalGradeBlocks.push({ FinalGrade: {}, User: user });
                                     callback(null);
                                 } else {

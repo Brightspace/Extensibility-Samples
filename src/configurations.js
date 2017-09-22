@@ -1,3 +1,5 @@
+'use strict';
+
 /****
     It is not recommended to commit your application key or client secret to ANY repository. In this case
     these keys were generated against the devcop Brightspace instance which can be used for developer testing.
