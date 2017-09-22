@@ -1,18 +1,25 @@
 'use strict';
 
-module.exports = function (app, request, configs, appContext, path, directory, helpers) {
+const path = require('path'),
+      configs = require('../configurations'),
+      helpers = require('../helpers'),
+      request = require('superagent'),
+      express = require('express'),
+      router = express.Router();
+
+module.exports = function (appContext, directory) {
 
      /* GET /isfselection
     *  Returns the isf-cim html page for presentation to the user within Brightspace.
     */
-    app.get('/isfselection', function(req, res) {
+    router.get('/isfselection', function(req, res) {
         res.sendFile(path.join(directory+'/html/isf-cim.html'));
     });
 
      /* POST /lti/isfcontent
     *  The LTI endpoint for a Insert Stuff (CIM) remote plugin.
     */
-    app.post('/lti/isfcontent', function (req, res) {
+    router.post('/lti/isfcontent', function (req, res) {
         const url = req.protocol + '://' + req.get('host') + '/lti/isfcontent';
         if (!helpers.verifyLtiRequest(url, req.body, configs.ltiSecret)) {
             console.log('Could not verify the LTI Request. OAuth 1.0 Validation Failed');
@@ -34,7 +41,7 @@ module.exports = function (app, request, configs, appContext, path, directory, h
     *  Returns the details for the request that needs to be submitted through the form back
     *  to Brightspace in order to insert the stuff into Brightspace.
     */
-    app.get('/getisfdetails', function (req, res) {
+    router.get('/getisfdetails', function (req, res) {
         const imageUrl = req.protocol + '://' + req.get('host') + '/content/isf/' + req.query.image;
         const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
@@ -75,4 +82,5 @@ module.exports = function (app, request, configs, appContext, path, directory, h
         
     });
 
+    return router;
 };

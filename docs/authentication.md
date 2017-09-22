@@ -42,7 +42,7 @@ The following is the workflow the sample has implemented:
     ```javascript
     // Using the imported 'querystring' library, create the query parameter list passing in the required variables.
     const authCodeParams = querystring.stringify({
-        response_type: "code",
+        response_type: 'code',
         redirect_uri: helpers.getRedirectUri(req),
         client_id: configs.clientId,
         scope: configs.authCodeScope,
@@ -60,14 +60,14 @@ The following is the workflow the sample has implemented:
     // Verify that the state passed into the request for an Auth code matches the state passed back to the callback.
     const state = req.query.state;
     if (state !== configs.state) {
-        console.log("The state value from the authorization request was incorrect.");
-        res.status(500).send({ error: "STATE mistmatch - authorization request could not be completed." });
+        console.log('The state value from the authorization request was incorrect.');
+        res.status(500).send({ error: 'STATE mistmatch - authorization request could not be completed.' });
         return;
     }
     
     // Set the values that will be sent to the Token Endpoint through the body of the request.
     const payload = querystring.stringify({ 
-        grant_type: "authorization_code", 
+        grant_type: 'authorization_code', 
         redirect_uri: configs.getRedirectUri(req), 
         code: authorizationCode
     });
@@ -81,7 +81,7 @@ The following is the workflow the sample has implemented:
             if (err) {
                 console.log('Access Token Error', err.response || err);
                 res.redirect('/auth');
-            } else if(response.statusCode != 200) {
+            } else if(response.statusCode !== 200) {
                 res.status(response.statusCode).send(response.error);
             } else {
                 const accessToken = response.body.access_token;
@@ -103,9 +103,9 @@ The following is the workflow the sample has implemented:
                 .set('Authorization', `Bearer ${accessToken}`)
                 .end(function(error, response) {
                      if (error) {
-                        console.log("Error calling the who am I route", error);
+                        console.log('Error calling the who am I route', error);
                         res.status(500).send({ error: error });
-                    } else if(response.statusCode != 200) {
+                    } else if(response.statusCode !== 200) {
                         res.status(response.statusCode).send(response.error);
                     } else {
                         res.status(200).send(response.text);

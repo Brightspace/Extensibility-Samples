@@ -1,14 +1,19 @@
 'use strict';
 
-const async = require('async');
+const async = require('async'),
+      configs = require('../configurations'),
+      helpers = require('../helpers'),
+      request = require('superagent'),
+      express = require('express'),
+      router = express.Router();
 
-module.exports = function (app, request, configs, appContext, helpers) {
+module.exports = function (appContext) {
 
     /* GET /finalgrades
     *  Returns final grades with user information for all users in the given org unit based on the orgUnitId
     *  passed in through the query parameters.
     */
-    app.get('/finalgrades', function (req, res) {
+    router.get('/finalgrades', function (req, res) {
         const orgUnitId = req.query.orgUnitId;
         const classlistApiPath = '/d2l/api/le/1.12/' + orgUnitId + '/classlist/';
         const accessToken = req.cookies[configs.cookieName].accessToken;
@@ -117,4 +122,6 @@ module.exports = function (app, request, configs, appContext, helpers) {
             }
         );               
     }
+
+    return router;
 };

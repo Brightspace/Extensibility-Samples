@@ -1,14 +1,19 @@
 'use strict';
 
-const fs = require('fs');
+const fs = require('fs'),
+      configs = require('../configurations'),
+      helpers = require('../helpers'),
+      request = require('superagent'),
+      express = require('express'),
+      router = express.Router();
 
-module.exports = function (app, request, configs, appContext, helpers) {
+module.exports = function (appContext) {
 
     /* GET /uploadhtmlcontent
     *  Uploads an HTML document to a module within the given course. The OrgUnitId and ModuleId are parameters
     *  passed in through the query parameters.
     */
-    app.get('/uploadhtmlcontent', function (req, res) {
+    router.get('/uploadhtmlcontent', function (req, res) {
 
         const orgUnitId = req.query.orgUnitId;
         const moduleId = req.query.moduleId;
@@ -80,7 +85,7 @@ module.exports = function (app, request, configs, appContext, helpers) {
     *  Uploads a Word document to a module within the given course. The OrgUnitId and ModuleId are parameters
     *  passed in through the query parameters.
     */
-    app.get('/uploadworddocument', function (req, res) {
+    router.get('/uploadworddocument', function (req, res) {
 
         const orgUnitId = req.query.orgUnitId;
         const moduleId = req.query.moduleId;
@@ -169,14 +174,15 @@ module.exports = function (app, request, configs, appContext, helpers) {
         content += startAndMiddleBoundary;
         content += 'Content-Disposition: form-data; name=""; filename="' + fileName + '"' + newLine;
         content += 'Content-Type: ' + fileContentType + newLine + newLine;
-        let text = '';
-        if (!fileEncoding) {
-            text = fs.readFileSync(filePath).toString('base64'); 
-        } else {
-            text = fs.readFileSync(filePath,'utf8');
-        }
+
+        const text = fileEncoding ? 
+            fs.readFileSync(filePath,'base64') : 
+            fs.readFileSync(filePath).toString('utf8');
+
         content += text + newLine;
         content += endBoundary;
         return content;
     }
+
+    return router;
 };

@@ -1,11 +1,17 @@
 'use strict';
 
-module.exports = function (app, request, configs, appContext, rootDirectory, helpers) {
+const configs = require('../configurations'),
+      helpers = require('../helpers'),
+      request = require('superagent'),
+      express = require('express'),
+      router = express.Router();
+
+module.exports = function (appContext, rootDirectory) {
 
     /* GET /uploadprofileimage
     *  Updates the profile image for the user that matches the UserId passed into the route.
     */
-    app.get('/uploadprofileimage', function (req, res) {
+    router.get('/uploadprofileimage', function (req, res) {
         const userId = req.query.userId;
         const apiPath = '/d2l/api/lp/1.9/profile/user/' + userId + '/image';
         const accessToken = req.cookies[configs.cookieName].accessToken;
@@ -49,5 +55,6 @@ module.exports = function (app, request, configs, appContext, rootDirectory, hel
         }
 
     });
-
+    
+    return router;
 };

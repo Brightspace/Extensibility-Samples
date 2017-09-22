@@ -1,11 +1,17 @@
 'use strict';
 
-module.exports = function (app, request, configs, appContext, helpers) {
+const configs = require('../configurations'),
+      helpers = require('../helpers'),
+      request = require('superagent'),
+      express = require('express'),
+      router = express.Router();
+
+module.exports = function (appContext) {
 
     /* GET /whoami
     *  Returns the who am I information based on the currently authenticated user.
     */
-    app.get('/whoami', function (req, res) {
+    router.get('/whoami', function (req, res) {
         const apiPath = '/d2l/api/lp/1.9/users/whoami';
         const accessToken = req.cookies[configs.cookieName].accessToken;
         if (accessToken) {
@@ -46,4 +52,5 @@ module.exports = function (app, request, configs, appContext, helpers) {
 
     });
 
+    return router;
 };

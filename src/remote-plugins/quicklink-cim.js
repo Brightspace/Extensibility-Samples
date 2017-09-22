@@ -1,18 +1,25 @@
 'use strict';
 
-module.exports = function (app, request, configs, appContext, path, directory, helpers) {
+const path = require('path'),
+      configs = require('../configurations'),
+      helpers = require('../helpers'),
+      request = require('superagent'),
+      express = require('express'),
+      router = express.Router();
+
+module.exports = function (appContext, directory) {
 
     /* GET /quicklinkselection
     *  Returns the quicklink-cim html page for presentation to the user within Brightspace.
     */
-    app.get('/quicklinkselection', function(req, res) {
+    router.get('/quicklinkselection', function(req, res) {
         res.sendFile(path.join(directory+'/html/quicklink-cim.html'));
     });
 
     /* POST /lti/quicklinkcontent
     *  The LTI endpoint for a Quicklink (CIM) remote plugin.
     */
-    app.post('/lti/quicklinkcontent', function (req, res) {
+    router.post('/lti/quicklinkcontent', function (req, res) {
         const url = req.protocol + '://' + req.get('host') + '/lti/quicklinkcontent';
         if (!helpers.verifyLtiRequest(url, req.body, configs.ltiSecret)) {
             console.log('Could not verify the LTI Request. OAuth 1.0 Validation Failed');
@@ -34,7 +41,7 @@ module.exports = function (app, request, configs, appContext, path, directory, h
     *  Returns the details for the request that needs to be submitted through the form back
     *  to Brightspace in order to add the content.
     */
-    app.get('/getquicklinkdetails', function (req, res) {
+    router.get('/getquicklinkdetails', function (req, res) {
         const fileUrl = req.protocol + '://' + req.get('host') + '/content/quicklink/' + req.query.link;
         const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
@@ -73,4 +80,5 @@ module.exports = function (app, request, configs, appContext, path, directory, h
         res.send(JSON.stringify(responseObject));        
     });
 
+    return router;
 };

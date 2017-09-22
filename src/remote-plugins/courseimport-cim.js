@@ -1,18 +1,26 @@
 'use strict';
 
-module.exports = function (app, request, configs, appContext, path, directory, helpers) {
+const path = require('path'),
+      configs = require('../configurations'),
+      helpers = require('../helpers'),
+      request = require('superagent'),
+      express = require('express'),
+      router = express.Router();
+      
+
+module.exports = function (appContext, directory) {
 
     /* GET /courseimportselection
     *  Returns the courseimport-cim html page for presentation to the user within Brightspace.
     */
-    app.get('/courseimportselection', function(req, res) {
+    router.get('/courseimportselection', function(req, res) {
         res.sendFile(path.join(directory+'/html/courseimport-cim.html'));
     });
 
     /* POST /lti/isfcontent
     *  The LTI endpoint for a Course Import (CIM) remote plugin.
     */
-    app.post('/lti/courseimport', function (req, res) {
+    router.post('/lti/courseimport', function (req, res) {
         const url = req.protocol + '://' + req.get('host') + '/lti/courseimport';
         if (!helpers.verifyLtiRequest(url, req.body, configs.ltiSecret)) {
             console.log('Could not verify the LTI Request. OAuth 1.0 Validation Failed');
@@ -34,7 +42,7 @@ module.exports = function (app, request, configs, appContext, path, directory, h
     *  Returns the details for the request that needs to be submitted through the form back
     *  to Brightspace in order to import the selected package into Brightspace.
     */
-    app.get('/getcourseimportdetails', function (req, res) {
+    router.get('/getcourseimportdetails', function (req, res) {
         // Generate the url to the package based on the user's selection, sent through the query param named
         // package.
         const fileUrl = 'https://github.com/Brightspace/Extensibility-Samples/raw/master/content/importpackage/' + req.query.package;
@@ -70,4 +78,5 @@ module.exports = function (app, request, configs, appContext, path, directory, h
         res.send(JSON.stringify(responseObject));        
     });
 
+    return router;
 };

@@ -1,8 +1,13 @@
 'use strict';
 
-const querystring = require('querystring');
+const querystring = require('querystring'),
+      configs = require('../configurations'),
+      helpers = require('../helpers'),
+      request = require('superagent'),
+      express = require('express'),
+      router = express.Router();
 
-module.exports = function (app, request, configs, helpers) {
+module.exports = function () {
  
     /* GET /oauth
     *   This endpoint is used to redirect the user to the authentication route
@@ -10,7 +15,7 @@ module.exports = function (app, request, configs, helpers) {
     *   that they want allow this application to make API requests on
     *   their behalf.
     */
-    app.get('/oauth', function(req, res) {
+    router.get('/oauth', function(req, res) {
 
         // The state value is hardcoded for the sample but normally should change with each request to the
         // authentication endpoint and then stored securely. Please read the configuration.md readme for
@@ -32,7 +37,7 @@ module.exports = function (app, request, configs, helpers) {
     *   method takes the authorization code and exchanges it for
     *   the token(stores it in a cookie) that can then be used to make API requests.
     */
-    app.get('/oauthcallback', function(req, res) {
+    router.get('/oauthcallback', function(req, res) {
         const authorizationCode = req.query.code;
         const state = req.query.state;
         if (state !== configs.state) {
@@ -63,4 +68,6 @@ module.exports = function (app, request, configs, helpers) {
                 }
             });
     });
+
+    return router;
 };
