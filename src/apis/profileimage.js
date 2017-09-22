@@ -1,18 +1,16 @@
-module.exports = function (app, request, configs, appContext, rootDirectory) {
-
-    var helpers = require('../helpers');
+module.exports = function (app, request, configs, appContext, rootDirectory, helpers) {
 
     /* GET /uploadprofileimage
     *  Updates the profile image for the user that matches the UserId passed into the route.
     */
     app.get('/uploadprofileimage', function (req, res) {
-        var userId = req.query.userId;
-        var apiPath = '/d2l/api/lp/1.9/profile/user/' + userId + '/image';
-        var accessToken = req.cookies[configs.cookieName].accessToken;
+        const userId = req.query.userId;
+        const apiPath = '/d2l/api/lp/1.9/profile/user/' + userId + '/image';
+        const accessToken = req.cookies[configs.cookieName].accessToken;
 
         if (accessToken) {
             console.log('Attempting to upload a user profile image using OAuth 2.0 authentication.');
-            var uploadProfileImage = helpers.createUrl(apiPath, configs);
+            const uploadProfileImage = helpers.createUrl(apiPath, configs);
             request
                 .post( uploadProfileImage )
                 .attach('profileImage', rootDirectory + '/content/profile/profileImage.png')
@@ -29,10 +27,10 @@ module.exports = function (app, request, configs, appContext, rootDirectory) {
                 });
         } else {
             console.log('Attempting to upload a user profile image using ID Key Authentication.');
-            var userId = req.cookies[configs.cookieName].userId;
-            var userKey = req.cookies[configs.cookieName].userKey;
-            var userContext = appContext.createUserContextWithValues(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, userId, userKey);
-            var apiCallUrl = userContext.createAuthenticatedUrl(apiPath, 'POST');
+            const userId = req.cookies[configs.cookieName].userId;
+            const userKey = req.cookies[configs.cookieName].userKey;
+            const userContext = appContext.createUserContextWithValues(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, userId, userKey);
+            const apiCallUrl = userContext.createAuthenticatedUrl(apiPath, 'POST');
             request
                 .post( apiCallUrl )
                 .attach('profileImage', rootDirectory + '/content/profile/profileImage.png')

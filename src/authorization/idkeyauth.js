@@ -1,13 +1,11 @@
-module.exports = function (app, configs, appContext) {
-
-    var helpers = require('../helpers');
+module.exports = function (app, configs, appContext, helpers) {
 
     /* GET /idkeyauth
     * This route is used to initiate the ID/Key Authentication workflow.
     */
     app.get('/idkeyauth', function(req, res) {
-        var callbackTarget = helpers.getIdKeyRedirectUri(req);
-        var getTokensUrl = appContext.createUrlForAuthentication(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, callbackTarget);
+        const callbackTarget = helpers.getIdKeyRedirectUri(req);
+        const getTokensUrl = appContext.createUrlForAuthentication(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, callbackTarget);
         res.redirect(getTokensUrl);
     });
 
@@ -17,8 +15,8 @@ module.exports = function (app, configs, appContext) {
     * in a cookie so that later requests can be signed using the user's context.
     */
     app.get('/idkeycallback', function(req, res) {
-        var callbackRoute = req.url;
-        var userContext = appContext.createUserContext(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, callbackRoute);
+        const callbackRoute = req.url;
+        const userContext = appContext.createUserContext(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, callbackRoute);
         res.cookie(configs.cookieName, { userKey: userContext.userKey, userId: userContext.userId }, configs.cookieOptions);
         res.redirect('/?authenticationType=idkeyauth');
     });

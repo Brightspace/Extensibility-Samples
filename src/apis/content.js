@@ -1,7 +1,6 @@
-module.exports = function (app, request, configs, appContext) {
+const fs = require('fs');
 
-    var fs = require('fs');
-    var helpers = require('../helpers');
+module.exports = function (app, request, configs, appContext, helpers) {
 
     /* GET /uploadhtmlcontent
     *  Uploads an HTML document to a module within the given course. The OrgUnitId and ModuleId are parameters
@@ -9,12 +8,12 @@ module.exports = function (app, request, configs, appContext) {
     */
     app.get('/uploadhtmlcontent', function (req, res) {
 
-        var orgUnitId = req.query.orgUnitId;
-        var moduleId = req.query.moduleId;
-        var apiPath = '/d2l/api/le/1.22/' + orgUnitId + '/content/modules/' + moduleId + '/structure/';
-        var accessToken = req.cookies[configs.cookieName].accessToken;
-        var boundary = 'xxBOUNDARYxx';
-        var topicData = {
+        const orgUnitId = req.query.orgUnitId;
+        const moduleId = req.query.moduleId;
+        const apiPath = '/d2l/api/le/1.22/' + orgUnitId + '/content/modules/' + moduleId + '/structure/';
+        const accessToken = req.cookies[configs.cookieName].accessToken;
+        const boundary = 'xxBOUNDARYxx';
+        const topicData = {
             Title: "Sample HTML Content",
             ShortTitle: null,
             Type: 1,
@@ -31,11 +30,11 @@ module.exports = function (app, request, configs, appContext) {
             MajorUpdateText: null,
             ResetCompletionTracking: null
         };
-        var body = buildMultipartBody(boundary, topicData, './content/file-upload/sample-content.html', 'sample-content.html', 'text/html', 'utf8');  
+        const body = buildMultipartBody(boundary, topicData, './content/file-upload/sample-content.html', 'sample-content.html', 'text/html', 'utf8');  
 
         if (accessToken) {
-            console.log('Attempting to make the Content Creation route call using OAuth 2.0 authentication.');
-            var contentRoute = helpers.createUrl(apiPath, configs);
+            console.log('Attempting to upload content using OAuth 2.0 authentication.');
+            const contentRoute = helpers.createUrl(apiPath, configs);
             request
                 .post(contentRoute)
                 .set('Authorization', `Bearer ${accessToken}`)
@@ -52,11 +51,11 @@ module.exports = function (app, request, configs, appContext) {
                     }
                 });
         } else {
-            console.log('Attempting to make the Content Creation route call using ID Key Authentication.');
-            var userId = req.cookies[configs.cookieName].userId;
-            var userKey = req.cookies[configs.cookieName].userKey;
-            var userContext = appContext.createUserContextWithValues(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, userId, userKey);
-            var apiCallUrl = userContext.createAuthenticatedUrl(apiPath, 'POST');
+            console.log('Attempting to upload content using ID Key Authentication.');
+            const userId = req.cookies[configs.cookieName].userId;
+            const userKey = req.cookies[configs.cookieName].userKey;
+            const userContext = appContext.createUserContextWithValues(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, userId, userKey);
+            const apiCallUrl = userContext.createAuthenticatedUrl(apiPath, 'POST');
             request
                 .post(apiCallUrl)
                 .type('multipart/mixed;boundary=' + boundary)
@@ -81,12 +80,12 @@ module.exports = function (app, request, configs, appContext) {
     */
     app.get('/uploadworddocument', function (req, res) {
 
-        var orgUnitId = req.query.orgUnitId;
-        var moduleId = req.query.moduleId;
-        var apiPath = '/d2l/api/le/1.22/' + orgUnitId + '/content/modules/' + moduleId + '/structure/';
-        var accessToken = req.cookies[configs.cookieName].accessToken;
-        var boundary = 'xxBOUNDARYxx';
-        var topicData = {
+        const orgUnitId = req.query.orgUnitId;
+        const moduleId = req.query.moduleId;
+        const apiPath = '/d2l/api/le/1.22/' + orgUnitId + '/content/modules/' + moduleId + '/structure/';
+        const accessToken = req.cookies[configs.cookieName].accessToken;
+        const boundary = 'xxBOUNDARYxx';
+        const topicData = {
             Title: "Sample Word Document Content",
             ShortTitle: null,
             Type: 1,
@@ -104,11 +103,11 @@ module.exports = function (app, request, configs, appContext) {
             ResetCompletionTracking: null
         };
 
-        var body = buildMultipartBody(boundary, topicData, './content/file-upload/sample-content.docx', 'sample-content.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        const body = buildMultipartBody(boundary, topicData, './content/file-upload/sample-content.docx', 'sample-content.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
 
         if (accessToken) {
             console.log('Attempting to make the Content Creation route call using OAuth 2.0 authentication.')
-            var contentRoute = helpers.createUrl(apiPath, configs);
+            const contentRoute = helpers.createUrl(apiPath, configs);
             request
                 .post(contentRoute)
                 .set('Authorization', `Bearer ${accessToken}`)
@@ -128,10 +127,10 @@ module.exports = function (app, request, configs, appContext) {
         } 
         else {
             console.log('Attempting to make the Content Creation route call using ID Key Authentication.')
-            var userId = req.cookies[configs.cookieName].userId;
-            var userKey = req.cookies[configs.cookieName].userKey;
-            userContext = appContext.createUserContextWithValues(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, userId, userKey);
-            var apiCallUrl = userContext.createAuthenticatedUrl(apiPath, 'POST');
+            const userId = req.cookies[configs.cookieName].userId;
+            const userKey = req.cookies[configs.cookieName].userKey;
+            const userContext = appContext.createUserContextWithValues(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, userId, userKey);
+            const apiCallUrl = userContext.createAuthenticatedUrl(apiPath, 'POST');
             request
                 .post(apiCallUrl)
                 .type('multipart/mixed;boundary=' + boundary)
@@ -157,18 +156,18 @@ module.exports = function (app, request, configs, appContext) {
     * otherwise standard utf8 encoding is used.
     */
     function buildMultipartBody(boundary, jsonData, filePath, fileName, fileContentType, fileEncoding) {      
-        var newLine = '\r\n';
-        var doubleDashes = '--';
-        var endBoundary = doubleDashes + boundary + doubleDashes + newLine;
-        var startAndMiddleBoundary = doubleDashes + boundary + newLine; 
+        const newLine = '\r\n';
+        const doubleDashes = '--';
+        const endBoundary = doubleDashes + boundary + doubleDashes + newLine;
+        const startAndMiddleBoundary = doubleDashes + boundary + newLine; 
 
-        var content = startAndMiddleBoundary;
+        let content = startAndMiddleBoundary;
         content += 'Content-Type: application/json' + newLine + newLine;
         content += JSON.stringify(jsonData) + newLine;
         content += startAndMiddleBoundary;
         content += 'Content-Disposition: form-data; name=""; filename="' + fileName + '"' + newLine;
         content += 'Content-Type: ' + fileContentType + newLine + newLine;
-        var text = '';
+        let text = '';
         if (!fileEncoding) {
             text = fs.readFileSync(filePath).toString('base64'); 
         } else {

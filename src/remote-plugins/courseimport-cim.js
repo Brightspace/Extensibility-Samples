@@ -1,6 +1,4 @@
-module.exports = function (app, request, configs, appContext, path, directory) {
-
-    var helpers = require('../helpers');
+module.exports = function (app, request, configs, appContext, path, directory, helpers) {
 
     /* GET /courseimportselection
     *  Returns the courseimport-cim html page for presentation to the user within Brightspace.
@@ -13,7 +11,7 @@ module.exports = function (app, request, configs, appContext, path, directory) {
     *  The LTI endpoint for a Course Import (CIM) remote plugin.
     */
     app.post('/lti/courseimport', function (req, res) {
-        var url = req.protocol + '://' + req.get('host') + '/lti/courseimport';
+        const url = req.protocol + '://' + req.get('host') + '/lti/courseimport';
         if (!helpers.verifyLtiRequest(url, req.body, configs.ltiSecret)) {
             console.log('Could not verify the LTI Request. OAuth 1.0 Validation Failed');
             res.status(500).send({error: 'Could not verify the LTI Request. OAuth 1.0 Validation Failed'});
@@ -37,10 +35,10 @@ module.exports = function (app, request, configs, appContext, path, directory) {
     app.get('/getcourseimportdetails', function (req, res) {
         // Generate the url to the package based on the user's selection, sent through the query param named
         // package.
-        var fileUrl = 'https://github.com/Brightspace/Extensibility-Samples/raw/master/content/importpackage/' + req.query.package;
-        var contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
+        const fileUrl = 'https://github.com/Brightspace/Extensibility-Samples/raw/master/content/importpackage/' + req.query.package;
+        const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
-        var contentItems = {
+        const contentItems = {
             "@context" : "http://purl.imsglobal.org/ctx/lti/v1/ContentItem",
             "@graph": [
                 {
@@ -53,7 +51,7 @@ module.exports = function (app, request, configs, appContext, path, directory) {
             ]
         };
         
-        var responseObject = {
+        let responseObject = {
             lti_message_type: 'ContentItemSelection',
             lti_version: 'LTI-1p0',
             content_items: JSON.stringify(contentItems),

@@ -1,6 +1,4 @@
-module.exports = function (app, request, configs, appContext, path, directory) {
-
-    var helpers = require('../helpers');
+module.exports = function (app, request, configs, appContext, path, directory, helpers) {
 
     /* GET /quicklinkselection
     *  Returns the quicklink-cim html page for presentation to the user within Brightspace.
@@ -13,7 +11,7 @@ module.exports = function (app, request, configs, appContext, path, directory) {
     *  The LTI endpoint for a Quicklink (CIM) remote plugin.
     */
     app.post('/lti/quicklinkcontent', function (req, res) {
-        var url = req.protocol + '://' + req.get('host') + '/lti/quicklinkcontent';
+        const url = req.protocol + '://' + req.get('host') + '/lti/quicklinkcontent';
         if (!helpers.verifyLtiRequest(url, req.body, configs.ltiSecret)) {
             console.log('Could not verify the LTI Request. OAuth 1.0 Validation Failed');
             res.status(500).send({error: 'Could not verify the LTI Request. OAuth 1.0 Validation Failed'});
@@ -35,10 +33,10 @@ module.exports = function (app, request, configs, appContext, path, directory) {
     *  to Brightspace in order to add the content.
     */
     app.get('/getquicklinkdetails', function (req, res) {
-        var fileUrl = req.protocol + '://' + req.get('host') + '/content/quicklink/' + req.query.link;
-        var contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
+        const fileUrl = req.protocol + '://' + req.get('host') + '/content/quicklink/' + req.query.link;
+        const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
-        var contentItems = {
+        const contentItems = {
             "@context" : "http://purl.imsglobal.org/ctx/lti/v1/ContentItem",
             "@graph": [
                 {
@@ -56,7 +54,7 @@ module.exports = function (app, request, configs, appContext, path, directory) {
             ]
         };
         
-        var responseObject = {
+        let responseObject = {
             lti_message_type: 'ContentItemSelection',
             lti_version: 'LTI-1p0',
             content_items: JSON.stringify(contentItems),

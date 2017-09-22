@@ -1,6 +1,6 @@
-module.exports = function (app, request, configs, appContext, path, directory) {
+module.exports = function (app, request, configs, appContext, path, directory, helpers) {
 
-    var helpers = require('../helpers');
+
 
      /* GET /isfselection
     *  Returns the isf-cim html page for presentation to the user within Brightspace.
@@ -13,7 +13,7 @@ module.exports = function (app, request, configs, appContext, path, directory) {
     *  The LTI endpoint for a Insert Stuff (CIM) remote plugin.
     */
     app.post('/lti/isfcontent', function (req, res) {
-        var url = req.protocol + '://' + req.get('host') + '/lti/isfcontent';
+        const url = req.protocol + '://' + req.get('host') + '/lti/isfcontent';
         if (!helpers.verifyLtiRequest(url, req.body, configs.ltiSecret)) {
             console.log('Could not verify the LTI Request. OAuth 1.0 Validation Failed');
             res.status(500).send({error: 'Could not verify the LTI Request. OAuth 1.0 Validation Failed'});
@@ -35,10 +35,10 @@ module.exports = function (app, request, configs, appContext, path, directory) {
     *  to Brightspace in order to insert the stuff into Brightspace.
     */
     app.get('/getisfdetails', function (req, res) {
-        var imageUrl = req.protocol + '://' + req.get('host') + '/content/isf/' + req.query.image;
-        var contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
+        const imageUrl = req.protocol + '://' + req.get('host') + '/content/isf/' + req.query.image;
+        const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
-        var contentItems = {
+        const contentItems = {
             "@context" : "http://purl.imsglobal.org/ctx/lti/v1/ContentItem",
             "@graph": [
                 {
@@ -57,7 +57,7 @@ module.exports = function (app, request, configs, appContext, path, directory) {
             ]
         };
         
-        var responseObject = {
+        let responseObject = {
             lti_message_type: 'ContentItemSelection',
             lti_version: 'LTI-1p0',
             content_items: JSON.stringify(contentItems),

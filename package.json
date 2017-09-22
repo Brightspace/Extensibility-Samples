@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server-local.js"
+    "start": "node server.js",
+    "local": "node server-local.js"
   },
   "author": "Desire2Learn Inc.",
   "license": "Apache License 2.0",

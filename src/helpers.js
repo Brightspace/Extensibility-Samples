@@ -1,4 +1,4 @@
-var crypto = require('crypto');
+const crypto = require('crypto');
 
 module.exports = {
 
@@ -19,8 +19,8 @@ module.exports = {
     *
     */
     generateAuthSignature: function(url, requestBody, secret) {
-        var signatureBaseString = 'POST&' + encodeURIComponent(url) + '&';
-        var first = true;
+        let signatureBaseString = 'POST&' + encodeURIComponent(url) + '&';
+        let first = true;
 
         for (const key of Object.keys(requestBody).sort()) {
             if( key === 'oauth_signature' ){
@@ -43,7 +43,7 @@ module.exports = {
             .replace(/%40/g, '%2540')
             .replace(/%5D/g, '%255D');
         
-        var computedSignature = crypto.createHmac('sha1', secret + '&').update(signatureBaseString).digest('base64');
+        const computedSignature = crypto.createHmac('sha1', secret + '&').update(signatureBaseString).digest('base64');
         return computedSignature;
     },
 
@@ -55,7 +55,7 @@ module.exports = {
     *    hash.
     */  
     verifyLtiRequest: function(url, requestBody, secret) {
-        var computedSignature = this.generateAuthSignature(url, requestBody, secret);
+        const computedSignature = this.generateAuthSignature(url, requestBody, secret);
         return requestBody.oauth_signature === computedSignature;
     },
 
@@ -63,7 +63,7 @@ module.exports = {
     * Used to generate a unix timestamp used in the signing of LTI responses in the temote plugin examples.
     */
     getUnixTimestamp: function() {
-        var unix = Math.round(+new Date()/1000);
+        const unix = Math.round(+new Date()/1000);
         return unix;
     },
 

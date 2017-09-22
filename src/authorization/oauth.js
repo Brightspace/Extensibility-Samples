@@ -1,8 +1,7 @@
-module.exports = function (app, request, configs) {
+const querystring = require('querystring');
 
-    var helpers = require('../helpers'),
-        querystring = require('querystring');
-        
+module.exports = function (app, request, configs, helpers) {
+ 
     /* GET /oauth
     *   This endpoint is used to redirect the user to the authentication route
     *   on the learning environment side so that the user can confirm
@@ -14,7 +13,7 @@ module.exports = function (app, request, configs) {
         // The state value is hardcoded for the sample but normally should change with each request to the
         // authentication endpoint and then stored securely. Please read the configuration.md readme for
         // more information.
-        var authCodeParams = querystring.stringify({
+        const authCodeParams = querystring.stringify({
             response_type: "code",
             redirect_uri: helpers.getRedirectUri(req),
             client_id: configs.clientId,
@@ -32,14 +31,14 @@ module.exports = function (app, request, configs) {
     *   the token(stores it in a cookie) that can then be used to make API requests.
     */
     app.get('/oauthcallback', function(req, res) {
-        var authorizationCode = req.query.code;
-        var state = req.query.state;
+        const authorizationCode = req.query.code;
+        const state = req.query.state;
         if (state !== configs.state) {
             console.log("The state value from the authorization request was incorrect.");
             res.status(500).send({ error: "STATE mistmatch - authorization request could not be completed." });
             return;
         }
-        var payload = querystring.stringify({ 
+        const payload = querystring.stringify({ 
             grant_type: "authorization_code", 
             redirect_uri: helpers.getRedirectUri(req), 
             code: authorizationCode
@@ -56,7 +55,7 @@ module.exports = function (app, request, configs) {
                 } else if(response.statusCode != 200) {
                     res.status(response.statusCode).send(response.error);
                 } else {
-                    var accessToken = response.body.access_token;
+                    const accessToken = response.body.access_token;
                     res.cookie(configs.cookieName, { accessToken: accessToken }, configs.cookieOptions);
                     res.redirect('/?authenticationType=oauth');
                 }
