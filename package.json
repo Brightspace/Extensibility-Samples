@@ -1,0 +1,24 @@
+{
+  "name": "brightspace-extensibility-apps",
+  "version": "1.0.0",
+  "description": "Sample application showing how to extend Brightspace using APIs, Remote Plugins and other integration points..",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server-local.js"
+  },
+  "author": "Desire2Learn Inc.",
+  "license": "Apache License 2.0",
+  "dependencies": {
+    "async": "^2.5.0",
+    "body-parser": "*",
+    "client-sessions": "^0.7.0",
+    "cookie-parser": "^1.4.3",
+    "express": "~4.8.0",
+    "superagent": "~0.17.0",
+    "valence": "^1.0.3"
+  },
+  "devDependencies": {
+    "openssl-self-signed-certificate": "^1.1.6"
+  }
+}

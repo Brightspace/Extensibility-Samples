@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Brightspace Sample Application</title>
+    </head>
+    <body>
+        <h1>Brightspace Sample Application</h1>
+        <h2>Authentication Routes</h2>
+        <div id="idkeyAuthMessage" hidden>
+            <p>Currently Authenticated Using the ID-Key Authentication System</p>
+        </div>
+        <div id="oauthMessage" hidden>
+            <p>Currently Authenticated Using OAuth 2.0</p>
+        </div>
+        <div>
+            <a id="idkeyAuth" href="https://localhost:3434/idkeyauth">Authenticate using the ID-Key Authentication System</a>
+        </div>
+        <div>
+            <a id="oauth" href="https://localhost:3434/oauth">Authenticate using OAuth 2.0</a>
+        </div>
+        
+        <h2>Test Course</h2>
+        <p>All APIs are executing against the following course. You can also view all implemented Remote Plugins in the same course.</p>
+        <a href="https://devcop.brightspace.com/d2l/home/6952" target="_blank">Devcop - Extensibility Samples Course (6952)</a>
+        <h2>Sample Requests</h2>
+        <a href="https://localhost:3434/whoami" target="_blank">Who AM I</a>
+        <br />
+        <a href="https://localhost:3434/finalgrades?orgUnitId=6952" target="_blank">Fetch all Final Grades for an OrgUnit</a>
+        <br />
+        <a href="https://localhost:3434/uploadhtmlcontent?orgUnitId=6952&moduleId=1946" target="_blank">Upload an HTML Content File</a>
+        <br />
+        <a href="https://localhost:3434/uploadworddocument?orgUnitId=6952&moduleId=1946" target="_blank">Upload a Word Document Content File</a>
+        <br />
+        <a href="https://localhost:3434/uploadprofileimage?userId=172" target="_blank">Upload a Profile Image</a>
+        <script>
+            function getParameterByName(name, url) {
+                if (!url) url = window.location.href;
+                name = name.replace(/[\[\]]/g, "\\$&");
+                var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                    results = regex.exec(url);
+                if (!results) return null;
+                if (!results[2]) return '';
+                return decodeURIComponent(results[2].replace(/\+/g, " "));
+            }
+            
+            function checkAuthenticated(){
+                var authenticationType = getParameterByName('authenticationType');
+                if (!authenticationType) {
+                    return;
+                }
+
+                document.getElementById('oauthMessage').setAttribute('hidden',true);
+                document.getElementById('idkeyAuthMessage').setAttribute('hidden', true);
+                document.getElementById('oauth').removeAttribute('hidden');
+                document.getElementById('idkeyAuth').removeAttribute('hidden');
+
+                if(authenticationType === 'oauth'){
+                    document.getElementById('oauthMessage').removeAttribute('hidden');
+                    document.getElementById('oauth').setAttribute('hidden', true);
+                }
+                if(authenticationType === 'idkeyauth'){
+                    document.getElementById('idkeyAuthMessage').removeAttribute('hidden');
+                    document.getElementById('idkeyAuth').setAttribute('hidden', true);
+                }
+            }
+            checkAuthenticated();
+        </script>
+    </body>
+</html>
