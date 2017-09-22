@@ -1,10 +1,11 @@
-var https = require('https');
-var selfSigned = require('openssl-self-signed-certificate');
+'use strict';
 
-var app = require('./server');
+const https = require('https'),
+      selfSigned = require('openssl-self-signed-certificate'),
+      app = require('./server');
 
-var httpsPort = process.env.HTTPS_PORT || 3434;
-var options = {
+const httpsPort = process.env.HTTPS_PORT || 3434;
+const options = {
     key: selfSigned.key,
     cert: selfSigned.cert
 };

@@ -48,7 +48,7 @@ The [index.html]() page has several hardcoded values that indicate to the underl
     * ```moduleId``` can be updated to the module in content where you would like the new file to be added.
 * Note: if you are changing the values for the content route be sure to checkout the [content.js](../src/content.js) file in order to update the topic data block to point to the proper content location ('Url' field):
     ```javascript
-        var topicData = {
+        const topicData = {
             Title: "Sample Word Document Content",
             ShortTitle: null,
             Type: 1,

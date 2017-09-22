@@ -1,21 +1,27 @@
-module.exports = function (app, request, configs) {
+'use strict';
 
-    var helpers = require('../helpers'),
-        querystring = require('querystring');
-        
+const querystring = require('querystring'),
+      configs = require('../configurations'),
+      helpers = require('../helpers'),
+      request = require('superagent'),
+      express = require('express'),
+      router = express.Router();
+
+module.exports = function () {
+ 
     /* GET /oauth
     *   This endpoint is used to redirect the user to the authentication route
     *   on the learning environment side so that the user can confirm
     *   that they want allow this application to make API requests on
     *   their behalf.
     */
-    app.get('/oauth', function(req, res) {
+    router.get('/oauth', function(req, res) {
 
         // The state value is hardcoded for the sample but normally should change with each request to the
         // authentication endpoint and then stored securely. Please read the configuration.md readme for
         // more information.
-        var authCodeParams = querystring.stringify({
-            response_type: "code",
+        const authCodeParams = querystring.stringify({
+            response_type: 'code',
             redirect_uri: helpers.getRedirectUri(req),
             client_id: configs.clientId,
             scope: configs.authCodeScope,
@@ -31,16 +37,16 @@ module.exports = function (app, request, configs) {
     *   method takes the authorization code and exchanges it for
     *   the token(stores it in a cookie) that can then be used to make API requests.
     */
-    app.get('/oauthcallback', function(req, res) {
-        var authorizationCode = req.query.code;
-        var state = req.query.state;
+    router.get('/oauthcallback', function(req, res) {
+        const authorizationCode = req.query.code;
+        const state = req.query.state;
         if (state !== configs.state) {
-            console.log("The state value from the authorization request was incorrect.");
-            res.status(500).send({ error: "STATE mistmatch - authorization request could not be completed." });
+            console.log('The state value from the authorization request was incorrect.');
+            res.status(500).send({ error: 'STATE mistmatch - authorization request could not be completed.'});
             return;
         }
-        var payload = querystring.stringify({ 
-            grant_type: "authorization_code", 
+        const payload = querystring.stringify({ 
+            grant_type: 'authorization_code', 
             redirect_uri: helpers.getRedirectUri(req), 
             code: authorizationCode
         });
@@ -53,13 +59,15 @@ module.exports = function (app, request, configs) {
                 if (err) {
                     console.log('Access Token Error', err.response || err);
                     res.redirect('/auth');
-                } else if(response.statusCode != 200) {
+                } else if(response.statusCode !== 200) {
                     res.status(response.statusCode).send(response.error);
                 } else {
-                    var accessToken = response.body.access_token;
+                    const accessToken = response.body.access_token;
                     res.cookie(configs.cookieName, { accessToken: accessToken }, configs.cookieOptions);
                     res.redirect('/?authenticationType=oauth');
                 }
             });
     });
+
+    return router;
 };

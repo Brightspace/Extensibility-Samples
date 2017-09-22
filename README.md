@@ -16,7 +16,7 @@ Out of the box this solution was built to work with the Devcop Brightspace insta
     ```
 5. Now that the required Node packages are installed the local node server can be started by running:
     ```shell
-    npm run start
+    npm run local
     ```
 6. The server should now be up and running locally and in a browser you can navigate to:
     https://localhost:3434

@@ -1,19 +1,26 @@
-module.exports = function (app, request, configs, appContext, path, directory) {
+'use strict';
 
-    var helpers = require('../helpers');
+const path = require('path'),
+      configs = require('../configurations'),
+      helpers = require('../helpers'),
+      request = require('superagent'),
+      express = require('express'),
+      router = express.Router();
+
+module.exports = function (appContext, directory) {
 
     /* GET /quicklinkselection
     *  Returns the quicklink-cim html page for presentation to the user within Brightspace.
     */
-    app.get('/quicklinkselection', function(req, res) {
+    router.get('/quicklinkselection', function(req, res) {
         res.sendFile(path.join(directory+'/html/quicklink-cim.html'));
     });
 
     /* POST /lti/quicklinkcontent
     *  The LTI endpoint for a Quicklink (CIM) remote plugin.
     */
-    app.post('/lti/quicklinkcontent', function (req, res) {
-        var url = req.protocol + '://' + req.get('host') + '/lti/quicklinkcontent';
+    router.post('/lti/quicklinkcontent', function (req, res) {
+        const url = req.protocol + '://' + req.get('host') + '/lti/quicklinkcontent';
         if (!helpers.verifyLtiRequest(url, req.body, configs.ltiSecret)) {
             console.log('Could not verify the LTI Request. OAuth 1.0 Validation Failed');
             res.status(500).send({error: 'Could not verify the LTI Request. OAuth 1.0 Validation Failed'});
@@ -34,15 +41,15 @@ module.exports = function (app, request, configs, appContext, path, directory) {
     *  Returns the details for the request that needs to be submitted through the form back
     *  to Brightspace in order to add the content.
     */
-    app.get('/getquicklinkdetails', function (req, res) {
-        var fileUrl = req.protocol + '://' + req.get('host') + '/content/quicklink/' + req.query.link;
-        var contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
+    router.get('/getquicklinkdetails', function (req, res) {
+        const fileUrl = req.protocol + '://' + req.get('host') + '/content/quicklink/' + req.query.link;
+        const contentItemReturnUrl = req.cookies['lti-request'].contentItemReturnUrl;
 
-        var contentItems = {
-            "@context" : "http://purl.imsglobal.org/ctx/lti/v1/ContentItem",
-            "@graph": [
+        const contentItems = {
+            '@context' : 'http://purl.imsglobal.org/ctx/lti/v1/ContentItem',
+            '@graph': [
                 {
-                    "@type" : "FileItem",
+                    '@type' : 'FileItem',
                     mediaType: 'text/html',
                     title: req.query.link,
                     text: 'A sample Brightspace Quicklink file.',
@@ -56,7 +63,7 @@ module.exports = function (app, request, configs, appContext, path, directory) {
             ]
         };
         
-        var responseObject = {
+        const responseObject = {
             lti_message_type: 'ContentItemSelection',
             lti_version: 'LTI-1p0',
             content_items: JSON.stringify(contentItems),
@@ -73,4 +80,5 @@ module.exports = function (app, request, configs, appContext, path, directory) {
         res.send(JSON.stringify(responseObject));        
     });
 
+    return router;
 };
