@@ -64,7 +64,7 @@ module.exports = function (appContext, directory) {
             ]
         };
         
-        let responseObject = {
+        const responseObject = {
             lti_message_type: 'ContentItemSelection',
             lti_version: 'LTI-1p0',
             content_items: JSON.stringify(contentItems),
