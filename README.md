@@ -38,6 +38,7 @@ The sample solution provided allows you to toggle between both implementations a
 ## API Samples
 The following API samples are available in this solution:
 * [Upload a File to Content](/docs/content.md)
+* [Upload a Profile Image](/docs/profileimage.md)
 * [Get All Final Grades in a Course](/docs/finalgrades.md)
 * [Who Am I](/docs/whoami.md)
 
