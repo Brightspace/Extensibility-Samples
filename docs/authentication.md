@@ -6,7 +6,7 @@ This project implements the ability to toggle between both authentication method
 See [Configurations](/docs/configurations.md) for details on how to set the various configurations that are used in the authentication process.
 
 ## ID/Key Authentication
-The code for the ID/Key Authentication can be found in the [idkeyauth.js](../src/authorization.js) file. The following outlines the implemented functionality:
+The code for the ID/Key Authentication can be found in the [idkeyauth.js](../src/authorization/idkeyauth.js) file. The following outlines the implemented functionality:
 * There are several different open source SDKs built by D2L that implement the ID/Key Authentication protocal. This solution is using the [JavaScript SDK](https://github.com/Brightspace/valence-sdk-javascript) and is imported in the project in the server.js file with the following code:
     ```javascript
     d2l = require('valence')
