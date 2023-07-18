@@ -6,7 +6,7 @@ This sample project provides three routes that can be used to setup the three ty
 
 
 ## Setting up a Remote Plugin
-You can view how to setup a Remote Plugin in Brightspace by visiting the [documentation](https://documentation.brightspace.com/EN/le/lti/admin/adding_content_item_messagel_certified_third_party_tool.htm?Highlight=remote%20plugins) site. When setting up the remote plugin make sure to set the Launch Point URL to be the routes described below. Also make sure that the secret matches the ```ltiSecret``` in the configurations file as discussed [here](configurations.md).
+You can view how to setup a Remote Plugin in Brightspace by visiting the [documentation](https://community.d2l.com/brightspace/kb/articles/4852-adding-a-content-item-message-certified-third-party-tool) site. When setting up the remote plugin make sure to set the Launch Point URL to be the routes described below. Also make sure that the secret matches the ```ltiSecret``` in the configurations file as discussed [here](configurations.md).
 
 ## Quicklink (CIM)
 ```
