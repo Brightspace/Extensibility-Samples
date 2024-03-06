@@ -49,7 +49,6 @@ The following Brightspace Remote Plugin examples that implement the LTI [Content
 * [Content Import CIM](/docs/remoteplugins-cim.md)
 
 ## External Links
-* [Awards Leaderboard Sample Application](https://github.com/Brightspace/Awards-Leaderboard)
 * [Brightspace APIs](http://docs.valence.desire2learn.com/reference.html)
 * [Brightspace Community - Developer Discussions](https://community.brightspace.com/s/topic/0TO610000000JcwGAE/developer)
 * [Brightspace Components](https://github.com/BrightspaceUI)
