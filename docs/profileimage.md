@@ -13,7 +13,7 @@ The example provided exposes a route for updating a user's profile image. The us
 
 The route provided is ```/uploadprofileimage```
 * When updated the user profile image route only returns a 200 success status no JSON.
-* The route can be accessed using OAuth 2.0 Authentication or the ID/Key authentication.
+* The route can be accessed using OAuth 2.0 Authentication
 * To view the profile image change navigate to the course classlist where the demo user is enrolled or the updated user's profile page.
 * You'll notice that this request still has a boundary similiar to the multipart/mixed request but the Content-Type is actually multipart/form-data which out of the box Superagent will handle for us.
 * The image being upload can be found in the [/profile](../content/profile) folder.

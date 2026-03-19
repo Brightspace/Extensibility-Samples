@@ -12,4 +12,4 @@ The example provided exposes a route for accessing the Who Am I response for the
 
 The route provided is ```/whoami```
 * This route returns the information retrieved from Brightspace for the currently authenticated user.
-* The route can be accessed using OAuth 2.0 Authentication or the ID/Key authentication.
+* The route can be accessed using OAuth 2.0 Authentication

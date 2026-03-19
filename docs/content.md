@@ -47,11 +47,10 @@ In the sample provided there are two routes created that will upload content to 
 
 The first route provided is ```/uploadhtmlcontent```.
 * This route can be used to upload a simple HTML file.
-* This can be accomplished using OAuth 2.0 Authentication or ID/Key Authentication.
+* This can be accomplished using OAuth 2.0 Authentication.
 
 The second route provided is ```/uploadworddocument```.
 * This route can be used to upload a Word document with the .docx extension.
-* This can be accomplished using OAuth 2.0 Authentication or ID/Key Authentication.
 * The Word document data is formatted to base64 encoding and the additional ```base64``` query parameter is set to ```true``` for the API request.
 * The ```Content-Type``` for the word document is set to ```application/vnd.openxmlformats-officedocument.wordprocessingml.document```.
 
