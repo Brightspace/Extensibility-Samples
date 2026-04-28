@@ -1,34 +1,9 @@
 # Authentication
 This project implements the ability to toggle between both authentication methods that Brightspace provides:
 * [OAuth 2.0](http://docs.valence.desire2learn.com/basic/oauth2.html)
-* [ID/Key Authentication](http://docs.valence.desire2learn.com/basic/auth.html)
 
 See [Configurations](/docs/configurations.md) for details on how to set the various configurations that are used in the authentication process.
 
-## ID/Key Authentication
-The code for the ID/Key Authentication can be found in the [idkeyauth.js](../src/authorization/idkeyauth.js) file. The following outlines the implemented functionality:
-* There are several different open source SDKs built by D2L that implement the ID/Key Authentication protocal. This solution is using the [JavaScript SDK](https://github.com/Brightspace/valence-sdk-javascript) and is imported in the project in the server.js file with the following code:
-    ```javascript
-    d2l = require('valence')
-    ```
-* Once the SDK is imported we can create application context using the Instance URL, the Application Key and the Application Id. The Application Key and Application Id are received when an application is registered in Brightspace using the 'Manage Extensibility' tool. The code for creating this context is:
-    ```javascript
-    const appContext = new d2l.ApplicationContext(configs.instanceUrl, configs.applicationId, configs.applicationKey);
-    ```
-* The ```/idkeyauth``` route exists in the project to initiate the ID/Key Authentication protocol using the created application context. When this route is navigated to in the browser the user is redirected to the Learning Environment where they are pompted to accept the application's ability to make APIs on their behalf. You can see in the callback that we call the [```createUserContext```](https://github.com/Brightspace/valence-sdk-javascript/blob/master/lib/valence.js#L266) which grabs userId and userKey from the query parameters returned from Brightspace.
-* Once they have accepted the terms the user is redirected to the  ```/idkeycallback``` route where the received userKey and userId are stored in a cookie so that subsequent requests can be signed using this context. The follwing code is how the context is setup again and used:
-
-    ```javascript
-    // Grab the UserId and UserKey from the cookie.
-    const userId = req.cookies[configs.cookieName].userId;
-    const userKey = req.cookies[configs.cookieName].userKey;
-    
-    // Setup user context using the values from the cookie.
-    const userContext = appContext.createUserContextWithValues(configs.instanceScheme + '//' + configs.instanceUrl, configs.instancePort, userId, userKey);
-    
-    // Create an authenticated URL using the SDK.
-    const apiCallUrl = userContext.createAuthenticatedUrl(apiPath, 'GET');
-    ```
 
 ## OAuth 2.0
 The code for the OAuth 2.0 implementation can be found in the [oauth.js](../src/authorization/oauth.js) file. Out of the box there are many supported OAuth 2.0 libraries that you can use in order to make your authenticated requests and support you through the authentication workflow. One thing to keep in mind is that OAuth 2.0 requires the calling application to be granted ```scopes``` that represent what routes the OAuth client is authorized to access. 

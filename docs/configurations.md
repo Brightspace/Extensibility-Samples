@@ -3,10 +3,6 @@ When first using the samples, no configuration should be neccessary. The default
 
 ## Configuration File
 Several different configurations can be set an environment level or directly in the [configurations.js](../src/configurations.js) file. The following configurations are available in this file:
-* ```applicationId``` (string)
-    * A string containing the Application Id granted by the LMS using the 'Manage Extensibility' tool. This is used for the [ID/Key Authentication](authentication.md) workflow.
-* ```applicationKey``` (string)
-    * A string containing the Application Key granted by the LMS using the 'Manage Extensibility' tool. This is used for the [ID/Key Authentication](authentication.md) workflow.
 * ```authCodeScope``` (string)
     * A string containing the scope(s) required for the application that enable the OAuth 2.0 authentication method to be used when making the sample API calls. This is used for the [OAuth 2.0 Authentication](authentication.md) workflow.
 * ```authEndpoint``` (string/URL)
