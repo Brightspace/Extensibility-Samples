@@ -7,21 +7,21 @@
     "lint": "jshint src server-local.js server.js",
     "local": "node server-local.js",
     "start": "node server.js",
-    "test": "npm run lint"  
+    "test": "npm run lint"
   },
   "author": "Desire2Learn Inc.",
   "license": "Apache License 2.0",
   "dependencies": {
-    "async": "^2.5.0",
-    "body-parser": "*",
-    "client-sessions": "^0.7.0",
-    "cookie-parser": "^1.4.3",
-    "express": "~4.8.0",
-    "superagent": "~0.17.0",
-    "valence": "^1.0.3"
+    "async": "^2",
+    "body-parser": "^2",
+    "client-sessions": "^0",
+    "cookie-parser": "^1",
+    "express": "^4",
+    "superagent": "^10",
+    "valence": "^1"
   },
   "devDependencies": {
-    "jshint": "^2.9.5",
-    "openssl-self-signed-certificate": "^1.1.6"
+    "jshint": "^0",
+    "openssl-self-signed-certificate": "^1"
   }
 }
